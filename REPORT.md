@@ -72,7 +72,43 @@ comparing scikit-learn, the manual PyTorch loop, and the standard
 torch.nn.Module/torch.optim workflow, on the same test set, against the
 naive baseline. Do the three agree? If not, why not?*
 
+I chose the logistic regression model because my target variable is binary. My business goal was to minimize costs by identifying risky borrowers, given that logistic regression estimates the probability for binary classifications (in this case, default or payback for each loan), it was perfect for my classification problem at hand. 
 
+I trained three models: scikit-learn's LogisticRegression, manual PyTorth gradient-descent loop, and a PyTorch workflow using nn.Linear, BCEWithLogitsLoss since it is the most common loss function for binary classification problems with the Adam optimizer. All three models were compared against the naive baseline, that predicts the training-set default rate for every observation. Lastly, I tuned the regularization strength for scikit-learn and learning rates for two PyTorch implementations using validation data.
+
+I'm not sure how I can format a table into this, but here are the results/metrics for each of the different models: 
+
+1) Naive baseline: 
+ROC-AUC = 0.5
+PR-AUC = 0.116
+Threshold = 0.01
+Total business cost = $1,989 (I assumed it is in dollars, but the dataset did not specify the currency for anything - not loan amounts, costs, or loan payback currency)
+
+2) Scikit-learn logistic regression:
+ROC-AUC = 0.7562
+PR-AUC = 0.317
+Threshold = 0.1
+Total business cost = $1,386
+
+3) Manual PyTorch Logistic Regression: 
+ROC-AUC = 0.7557
+PR-AUC = 0.3176
+Threshold = 0.1
+Total business cost = $1,395
+
+4) Standard PyTorch Logistic Regression:
+ROC-AUC = 0.7477
+PR-AUC = 0.3089
+Threshold = 0.09
+Total business cost = $1,382
+
+For the most part, the three agree. With that said, the sci-kit learn has the highest ROC-AUC, with PyTorch as a close second for both the AUC-ROC and PR-AUC. With that said, all three models outperform that naive baseline by a mile. 
+
+The three models have varying metrics because of varying optimization steps: scikit-learn uses its personalized solver, manual PyTorch calculates graduent updates explicitly, while the PyTorch with Adam uses mini-batch traning. With that said, the three models agree on the overall approximate results, but do not produce identical business costs or metrics. 
+
+All three models reduced business costs with the Adam PyTorch model having lowest costs by a slight margin, scikit-learn coming in second and the manual pytorth logistic regression model having highest costs. All three models minimize the baseline costs by more than 25%, which is a very healthy metric for a bank or any financial institution giving out loans.
+
+As we discussed during our last session when going over our class notebook, which model will be chosen depends most on the priorities of a business. Scikit-learn has the best performance based on metrics, but pytorch with adam optimization has the lowest costs. Realistically, a bank would most probably be interested in minimizing costs, and given how close all metrics are going with the PyTorch with the Adam optimzer would be a rational decision.
 
 ## Limitations & next steps
 
