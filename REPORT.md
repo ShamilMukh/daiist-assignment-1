@@ -6,7 +6,7 @@ can actually explain.*
 
 - **Name**: Shamil Mukhamedov
 - **Student ID**: 20352
-- **Email**: smukhkamedov.ieu2022@student.ie.edu
+- **Email**: smukhamedov.ieu2022@student.ie.edu
 - **Group**: BBADBA 5B
 
 ## Dataset
